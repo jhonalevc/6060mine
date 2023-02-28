@@ -1,0 +1,117 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "green", "id": "Start", "label": "Start", "level": 0, "shape": "diamond", "size": 120}, {"color": "orange", "id": "register request", "label": "register request", "level": 1, "shape": "box"}, {"color": "orange", "id": "examine thoroughly", "label": "examine thoroughly", "level": 2, "shape": "box"}, {"color": "orange", "id": "check ticket", "label": "check ticket", "level": 2, "shape": "box"}, {"color": "orange", "id": "examine casually", "label": "examine casually", "level": 2, "shape": "box"}, {"color": "orange", "id": "reinitiate request", "label": "reinitiate request", "level": 2, "shape": "box"}, {"color": "orange", "id": "decide", "label": "decide", "level": 4, "shape": "box"}, {"color": "orange", "id": "reject request", "label": "reject request", "level": 5, "shape": "box"}, {"color": "orange", "id": "pay compensation", "label": "pay compensation", "level": 7, "shape": "box"}, {"color": "green", "id": "End", "label": "End", "level": 7, "shape": "diamond", "size": 120}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "orange", "from": "Start", "label": "-", "to": "register request"}, {"arrows": "to", "color": "orange", "from": "register request", "label": "23hours,4mins", "to": "examine thoroughly"}, {"arrows": "to", "color": "orange", "from": "examine thoroughly", "label": "3days,13hours,51mins,30secs", "to": "check ticket"}, {"arrows": "to", "color": "orange", "from": "check ticket", "label": "2days,2hours,32mins,40secs", "to": "decide"}, {"arrows": "to", "color": "orange", "from": "decide", "label": "1day,18hours,50mins,40secs", "to": "reject request"}, {"arrows": "to", "color": "orange", "from": "register request", "label": "10hours,52mins", "to": "check ticket"}, {"arrows": "to", "color": "orange", "from": "check ticket", "label": "1day,1hour,40mins,30secs", "to": "examine casually"}, {"arrows": "to", "color": "orange", "from": "examine casually", "label": "4days,8hours,17mins", "to": "decide"}, {"arrows": "to", "color": "orange", "from": "decide", "label": "5days,22hours,49mins,20secs", "to": "pay compensation"}, {"arrows": "to", "color": "orange", "from": "register request", "label": "8hours,57mins,20secs", "to": "examine casually"}, {"arrows": "to", "color": "orange", "from": "examine casually", "label": "13hours,19mins,30secs", "to": "check ticket"}, {"arrows": "to", "color": "orange", "from": "decide", "label": "18hours,26mins,40secs", "to": "reinitiate request"}, {"arrows": "to", "color": "orange", "from": "reinitiate request", "label": "48mins", "to": "examine thoroughly"}, {"arrows": "to", "color": "orange", "from": "check ticket", "label": "1day,2hours,37mins", "to": "examine thoroughly"}, {"arrows": "to", "color": "orange", "from": "examine thoroughly", "label": "21hours,19mins", "to": "decide"}, {"arrows": "to", "color": "orange", "from": "reinitiate request", "label": "2days,22hours,15mins", "to": "check ticket"}, {"arrows": "to", "color": "orange", "from": "reinitiate request", "label": "20hours,18mins", "to": "examine casually"}, {"arrows": "to", "color": "orange", "from": "reject request", "label": "-", "to": "End"}, {"arrows": "to", "color": "orange", "from": "pay compensation", "label": "-", "to": "End"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 1,
+            "centralGravity": 0,
+            "damping": 1,
+            "gravitationalConstant": -68,
+            "springConstant": 0.03,
+            "springLength": 200
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
